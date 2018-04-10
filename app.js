@@ -46,6 +46,8 @@ var questions = [
     }
 
 ];
+
+
 var question = document.getElementById("question");
 var option1 = document.getElementById("option1");
 var option2 = document.getElementById("option2");
@@ -53,40 +55,64 @@ var option3 = document.getElementById("option3");
 var option4 = document.getElementById("option4");
 
 question.innerHTML = questions[0].question;
-option1.innerHTML = questions[0].option1;
-option2.innerHTML = questions[0].option2
-option3.innerHTML = questions[0].option3
-option4.innerHTML = questions[0].option4
-var load = 0;
-var correct = 0 ;
-function next(){
-	var val = document.querySelector("input[name='option']:checked");
-	if(val === null){
-		alert("Select anyone");
-			}
-			else{
-				if (questions[load].answer  === val.value){
-				console.log("right")
-					correct++
-			}
-			else{
-				console.log("Wrong");
-			}
-			if(questions.length -1 === load){
-				var score = correct * 20 ;
-				document.getElementById("quizContainer").style.display = "none";
-				document.getElementById("resultContainer").style.display = "block";
-				document.getElementById("score").innerHTML = "Your Score Is " + score + "%";
-			}
-			else{console.log(val.value);
-			
-	load++
-	question.innerHTML = questions[load].question;
-option1.innerHTML = questions[load].option1
-option2.innerHTML = questions[load].option2
-option3.innerHTML = questions[load].option3
-option4.innerHTML = questions[load].option4
-			}
-		}
 
+option1.innerHTML = questions[0].option1;
+option2.innerHTML = questions[0].option2;
+option3.innerHTML = questions[0].option3;
+option4.innerHTML = questions[0].option4;
+var load = 0;
+var correct = 0;
+var score=0;
+window.onload=function timer(){
+    var timer= document.getElementById("timer");
+    var min=4;
+    var sec=60;
+    var timerStart = setInterval(function(){
+        timer.innerHTML=min + ":" +sec;
+        sec--;
+        if(min<0){
+            clearInterval(timerStart)
+            alert("Time Out");
+            score = correct * 20;
+            document.getElementById("quizcontainer").style.display = "none";
+            document.getElementById("resultContainer").style.display = "block";
+            document.getElementById("score").innerHTML = "Your score is" + score + "%";
+        }
+        else if(sec==0){
+            min--;
+            sec =10;
+            
+        }
+    },1000)
+}
+function next() {
+    var val = document.querySelector("input[name='option']:checked");
+    if (val === null) {
+        alert("select anyone");
+    }
+    else {
+        if (questions[load].answer === val.value) {
+            console.log("right");
+            correct++;
+        }
+        else {
+            console.log("wrong");
+        }
+        if (questions.length - 1 === load) {
+            score = correct * 20;
+            document.getElementById("quizcontainer").style.display = "none";
+            document.getElementById("resultContainer").style.display = "block";
+            document.getElementById("score").innerHTML = "Your score is" + score + "%";
+        }
+        else{
+            var val = document.querySelector("input[name='option']:checked").checked=false;
+        console.log(val.value);
+        load++;
+        question.innerHTML = questions[load].question;
+        option1.innerHTML = questions[load].option1;
+        option2.innerHTML = questions[load].option2;
+        option3.innerHTML = questions[load].option3;
+        option4.innerHTML = questions[load].option4;
+    }
+}
 }
